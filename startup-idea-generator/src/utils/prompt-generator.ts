@@ -5,5 +5,8 @@
 
 
 function generateIdeaPrompt(): string {
-    return '';
+    return 'Soon to be a prompt';
 }
+
+
+export { generateIdeaPrompt };
