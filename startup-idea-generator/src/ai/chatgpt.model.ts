@@ -15,9 +15,9 @@ import { Request } from './types';
  * - GPT_4: 6B parameters, 256 sequence length, 16 attention heads.
  */
 enum GPTModel {
-    GPT_35_TURBO="gpt-3-5-turbo",
-    GPT_35_TURBO_16K="gpt-3-5-turbo-16k",
-    GPT_4="gpt-3-4",
+    GPT_35_TURBO="gpt-3.5-turbo",
+    GPT_35_TURBO_16K="gpt-3.5-turbo-16k",
+    GPT_4="gpt-4",
 }
 
 
