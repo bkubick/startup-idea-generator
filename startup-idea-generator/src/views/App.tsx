@@ -1,5 +1,7 @@
 import React from 'react';
 
+import StartupIdeaGenerator from './startup-idea-generator';
+
 
 interface Props {}
 
@@ -17,7 +19,7 @@ class App extends React.Component<Props, State> {
     render() {
         return (
             <div id='app' className='container mx-auto h-screen flex'>
-              Startup Idea Generator
+              <StartupIdeaGenerator />
             </div>
         )
     }
