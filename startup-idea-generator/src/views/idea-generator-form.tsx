@@ -34,7 +34,6 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
                 details: '',
             },
             submitting: false,
-
         }
 
         this.onSubmit = this.onSubmit.bind(this);
