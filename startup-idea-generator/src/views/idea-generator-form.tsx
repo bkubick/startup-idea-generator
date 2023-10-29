@@ -12,11 +12,14 @@ interface FormValues {
 }
 
 
-interface Props {}
+interface Props {
+    generatingHandler?: (generating: boolean) => void;
+}
 
 
 interface State {
     form: FormValues;
+    submitting: boolean;
 }
 
 
@@ -29,7 +32,9 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
                 apiToken: '',
                 industry: '',
                 details: '',
-            }
+            },
+            submitting: false,
+
         }
 
         this.onSubmit = this.onSubmit.bind(this);
@@ -41,11 +46,23 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
      * @param values   The form values.
      * @param actions   The form actions.
      */
-    onSubmit(values: FormValues, actions: any) {
-        setTimeout(() => {
-            console.log(values);
-            actions.setSubmitting(false);
-        }, 1000);
+    async onSubmit(values: FormValues, actions: any) {
+        this.setState({ submitting: true });
+
+        if (this.props.generatingHandler) {
+            this.props.generatingHandler(true);
+        }
+
+        const sleep = (delay: number) => new Promise((resolve) => setTimeout(resolve, delay))
+
+        await sleep(4000);
+        console.log(values);
+        actions.setSubmitting(false);
+    
+        this.setState({ submitting: false });
+        if (this.props.generatingHandler) {
+            this.props.generatingHandler(false);
+        }
     }
 
     /**

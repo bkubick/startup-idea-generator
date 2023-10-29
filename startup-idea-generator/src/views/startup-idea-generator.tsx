@@ -46,6 +46,7 @@ class StartupIdeaGenerator extends React.Component<Props, State> {
         };
 
         this.setActiveTab = this.setActiveTab.bind(this);
+        this.setGenerating = this.setGenerating.bind(this);
     }
 
     /**
@@ -86,6 +87,17 @@ class StartupIdeaGenerator extends React.Component<Props, State> {
     }
 
     /**
+     * Sets the generating state.
+     * This is used to hide/display the loading spinner.
+     */
+    setGenerating(generating: boolean) {
+        console.log('setGenerating')
+        this.setState({
+            generating: generating,
+        });
+    }
+
+    /**
      * The render method for the startup idea generator.
      * 
      * @returns The startup idea generator.
@@ -100,7 +112,7 @@ class StartupIdeaGenerator extends React.Component<Props, State> {
                             <h1 className='sticky top-0 backdrop-blur z-10 uppercase text-2xl font-medium py-5'>
                                 Startup Idea Generator
                             </h1>
-                            <IdeaGeneratorForm />
+                            <IdeaGeneratorForm generatingHandler={ this.setGenerating } />
                         </div>
                     </div>
                 </div>
@@ -113,7 +125,7 @@ class StartupIdeaGenerator extends React.Component<Props, State> {
                                 { this.generateStartupIdeaTextDisplay }
                             </div>
                             <div id={ this.tabs[1].id } className={`py-3 h-auto ${this.tabs[1].id === this.state.currentTab.id ? "visible" : "hidden"}`}>
-                            { generateIdeaPrompt().split(/\n/).map((line, index) => <React.Fragment key={index}>{line}<br/></React.Fragment>) }
+                                { generateIdeaPrompt().split(/\n/).map((line, index) => <React.Fragment key={index}>{line}<br/></React.Fragment>) }
                             </div>
                         </div>
                     </div>
