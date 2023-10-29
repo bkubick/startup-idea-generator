@@ -53,9 +53,10 @@ interface RadioGroupArgs extends RadioGroupProps {
  * @returns React.JSX.Element with the radio item.
  */
 function radioItem(option: Option, index: number, field: RadioField, props: RadioGroupProps): React.JSX.Element {
+    const checked = field.value === option.value;
     return (
         <div key={ index } className='mr-4'>
-            <input type="radio" id={ option.value } { ...field } { ...props } value={ option.value } className={ 'mr-2' }/>
+            <input type="radio" id={ option.value } { ...field } { ...props } value={ option.value } className={ 'mr-2' } checked={ checked }/>
             <label htmlFor={ option.value }>{ option.label }</label>
         </div>
     )
