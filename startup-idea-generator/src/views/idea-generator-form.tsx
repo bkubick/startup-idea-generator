@@ -87,18 +87,18 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
                         <ErrorMessage name="gptModel"/>
                     </div>
                     <div className='mb-4'>
-                        <Field name="industry" placeholder="Industry" component={ InputField } validate={ Required } />
+                        <Field name="industry" placeholder="Industry" className="input" component={ InputField } validate={ Required } />
                         <ErrorMessage name="industry"/>
                     </div>
                     <div className='mb-4'>
-                        <Field name="details" placeholder="Details" component={ TextareaField } validate={ Required }/>
+                        <Field name="details" placeholder="Details" className="textarea-input" component={ TextareaField } validate={ Required }/>
                         <ErrorMessage name="details"/>
                     </div>
                     <div className='mb-4'>
-                        <Field type="password" name="apiToken" placeholder="Chat GPT API Token" component={ InputField } validate={ Required } />
+                        <Field type="password" name="apiToken" placeholder="Chat GPT API Token" className="input" component={ InputField } validate={ Required } />
                         <ErrorMessage name="apiToken"/>
                     </div>
-                    <button className='btn-sm btn-primary-outline' type="submit">Submit</button>
+                    <button className='btn btn-primary-outline' type="submit">Submit</button>
                 </Form>
             </Formik>
         )
