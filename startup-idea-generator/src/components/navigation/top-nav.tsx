@@ -46,9 +46,9 @@ class TopNav extends React.Component<Props, State> {
      * @param tab The tab to generate.
      * @returns The tab.
      */
-    generateTab(tab: Tab): ReactElement {
+    generateTab(tab: Tab, key: string): ReactElement {
         return (
-            <li className="mr-2">
+            <li key={ key } className="mr-2">
                 <a
                     href={`#${tab.id}`}
                     className={ this.tabClass(tab) }
@@ -68,7 +68,7 @@ class TopNav extends React.Component<Props, State> {
         return (
             <div className="sticky top-0 backdrop-blur z-10 text-sm font-medium text-center text-gray-200 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
                 <ul className="flex flex-wrap -mb-px">
-                    { this.props.tabs.map((tab: Tab) => this.generateTab(tab)) }
+                    { this.props.tabs.map((tab: Tab, index: number) => this.generateTab(tab, `tab-${index}-${tab.id}`)) }
                 </ul>
             </div>
         );
