@@ -37,7 +37,7 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
         super(props);
         this.state = {
             form: {
-                gptModel: '',
+                gptModel: GPTModel.GPT_4,
                 apiToken: '',
                 industry: '',
                 details: '',
