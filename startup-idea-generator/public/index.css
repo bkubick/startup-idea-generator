@@ -14,7 +14,7 @@ body {
 }
 
 .btn {
-  @apply font-bold py-2 px-4 rounded;
+  @apply font-bold py-1 px-2 rounded-md;
 }
 
 .btn-primary-outline {
@@ -26,16 +26,16 @@ body {
 }
 
 .textarea-input {
-  @apply rounded text-white font-mono text-xs bg-transparent border-2 border-gray-400;
+  @apply rounded text-white font-mono text-xs bg-transparent border-gray-400 flex;
 
   line-height: 18px;
   padding: 8px 8px 8px 12px;
   min-width: 200px;
-  min-height: 200px;
+  min-height: 300px;
 }
 
 .input {
-  @apply rounded text-white font-mono text-xs bg-transparent border-2 border-gray-400;
+  @apply rounded text-white font-mono text-xs bg-transparent border-gray-400;
 
   line-height: 18px;
   padding: 8px 8px 8px 12px;
