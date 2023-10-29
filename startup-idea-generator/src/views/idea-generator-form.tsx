@@ -1,11 +1,13 @@
 import { ErrorMessage, Formik, Form, Field } from 'formik';
 import React, { ReactElement } from 'react';
 
-import { InputField, TextareaField } from 'src/components/form/fields';
+import { GPTModel } from 'src/ai/chatgpt.model';
+import { fieldTypes, InputField, RadioGroup, TextareaField } from 'src/components/form/fields';
 import { Required } from 'src/components/form/validation';
 
 
 interface FormValues {
+    gptModel: string;
     apiToken: string;
     industry: string;
     details: string;
@@ -25,10 +27,17 @@ interface State {
 
 class IdeaGeneratorForm extends React.Component<Props, State> {
 
+    GPT_MODEL_OPTIONS: fieldTypes.Option[] = [
+        { label: GPTModel.GPT_35_TURBO, value: GPTModel.GPT_35_TURBO },
+        { label: GPTModel.GPT_35_TURBO_16K, value: GPTModel.GPT_35_TURBO_16K },
+        { label: GPTModel.GPT_4, value: GPTModel.GPT_4 },
+    ]
+
     constructor(props: Props) {
         super(props);
         this.state = {
             form: {
+                gptModel: '',
                 apiToken: '',
                 industry: '',
                 details: '',
@@ -73,6 +82,10 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
         return (
             <Formik initialValues={ this.state.form } onSubmit={ this.onSubmit }>
                 <Form className='w-full'>
+                    <div className='mb-4'>
+                        <Field name="gptModel" className="flex" options={ this.GPT_MODEL_OPTIONS } component={ RadioGroup } validate={ Required } />
+                        <ErrorMessage name="gptModel"/>
+                    </div>
                     <div className='mb-4'>
                         <Field name="industry" placeholder="Industry" component={ InputField } validate={ Required } />
                         <ErrorMessage name="industry"/>
