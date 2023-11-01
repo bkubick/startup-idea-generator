@@ -33,6 +33,7 @@ interface Props {
     field: Field;
     options: types.Option[];
     className?: string;
+    placeholder?: string;
 }
 
 
@@ -53,6 +54,7 @@ const SelectField = (props: Props): React.JSX.Element => {
     return (
         <Select
             options={ props.options}
+            placeholder={ props.placeholder }
             className={ className }
             classNamePrefix='react-select'
             value={ state?.value }

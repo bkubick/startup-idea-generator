@@ -114,7 +114,7 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
                         <ErrorMessage name="gptModel"/>
                     </div>
                     <div className='mb-4'>
-                        <Field name="industries" className="flex" options={ this.INDUSTRY_OPTIONS } component={ SelectField } validate={ ValidationPipeline([Required, Limit(10)]) }/>
+                        <Field name="industries" placeholder="Industries..."  className="flex" options={ this.INDUSTRY_OPTIONS } component={ SelectField } validate={ ValidationPipeline([Required, Limit(10)]) }/>
                         <ErrorMessage name="industries"/>
                     </div>
                     <div className='mb-4'>
