@@ -64,8 +64,11 @@ function ValidateEmail(value?: string): React.JSX.Element | undefined {
  */
 function Required(value?: any): React.JSX.Element | undefined {
     let error: string | undefined;
-
-    if ( !value ) {
+    if ( Array.isArray(value) ) {
+        if ( value.length === 0 ) {
+            error = 'Required';
+        }
+    } else if ( !value ) {
         error = 'Required';
     }
 
