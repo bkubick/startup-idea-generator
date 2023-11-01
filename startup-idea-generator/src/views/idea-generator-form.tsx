@@ -2,14 +2,16 @@ import { ErrorMessage, Formik, Form, Field } from 'formik';
 import React, { ReactElement } from 'react';
 
 import { GPTModel } from 'src/ai/chatgpt.model';
-import { fieldTypes, InputField, RadioGroup, TextareaField } from 'src/components/form/fields';
-import { Required } from 'src/components/form/validation';
+import { fieldTypes, InputField, RadioGroup, SelectField, TextareaField } from 'src/components/form/fields';
+import { Limit, Required, ValidationPipeline } from 'src/components/form/validation';
+
+import { generateIdeaPrompt } from 'src/utils/prompt-generator';
 
 
 interface FormValues {
     gptModel: string;
     apiToken: string;
-    industry: string;
+    industries: string[];
     details: string;
 }
 
@@ -20,7 +22,6 @@ interface Props {
 
 
 interface State {
-    form: FormValues;
     submitting: boolean;
 }
 
@@ -33,15 +34,39 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
         { label: GPTModel.GPT_4, value: GPTModel.GPT_4 },
     ]
 
+    INDUSTRY_OPTIONS: fieldTypes.Option[] = [
+        { label: '3D Printing', value: '3d-printing'},
+        { label: 'Aerospace', value: 'aerospace'},
+        { label: 'Agriculture', value: 'agriculture' },
+        { label: 'Artificial Intelligence', value: 'artificial-intelligence' },
+        { label: 'Automotive', value: 'automotive' },
+        { label: 'Construction', value: 'construction' },
+        { label: 'Education', value: 'education' },
+        { label: 'Energy', value: 'energy' },
+        { label: 'Entertainment', value: 'entertainment' },
+        { label: 'Finance', value: 'finance' },
+        { label: 'Food', value: 'food' },
+        { label: 'Healthcare', value: 'healthcare' },
+        { label: 'Hospitality', value: 'hospitality' },
+        { label: 'Manufacturing', value: 'manufacturing' },
+        { label: 'Real Estate', value: 'real-estate' },
+        { label: 'Renewable Energy', value: 'renewable-energy' },
+        { label: 'Retail', value: 'retail' },
+        { label: 'Technology', value: 'technology' },
+        { label: 'Transportation', value: 'transportation' },
+        { label: 'Utilities', value: 'utilities' },
+    ]
+
+    INITIAL_FORM_VALUES: FormValues = {
+        gptModel: GPTModel.GPT_4,
+        apiToken: '',
+        industries: [],
+        details: '',
+    }
+
     constructor(props: Props) {
         super(props);
         this.state = {
-            form: {
-                gptModel: GPTModel.GPT_4,
-                apiToken: '',
-                industry: '',
-                details: '',
-            },
             submitting: false,
         }
 
@@ -63,6 +88,8 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
 
         const sleep = (delay: number) => new Promise((resolve) => setTimeout(resolve, delay))
 
+        let prompt = generateIdeaPrompt();
+        prompt = `${prompt}\n Form: ${JSON.stringify(values)}`;
         await sleep(4000);
         console.log(values);
         actions.setSubmitting(false);
@@ -80,15 +107,15 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
      */
     render(): ReactElement {
         return (
-            <Formik initialValues={ this.state.form } onSubmit={ this.onSubmit }>
+            <Formik initialValues={ this.INITIAL_FORM_VALUES } onSubmit={ this.onSubmit }>
                 <Form className='w-full'>
                     <div className='mb-4'>
-                        <Field name="gptModel" className="flex" options={ this.GPT_MODEL_OPTIONS } component={ RadioGroup } validate={ Required } />
+                        <Field name="gptModel" className="flex" options={ this.GPT_MODEL_OPTIONS } component={ RadioGroup } validate={ Required }/>
                         <ErrorMessage name="gptModel"/>
                     </div>
                     <div className='mb-4'>
-                        <Field name="industry" placeholder="Industry" className="input" component={ InputField } validate={ Required } />
-                        <ErrorMessage name="industry"/>
+                        <Field name="industries" className="flex" options={ this.INDUSTRY_OPTIONS } component={ SelectField } validate={ ValidationPipeline([Required, Limit(10)]) }/>
+                        <ErrorMessage name="industries"/>
                     </div>
                     <div className='mb-4'>
                         <Field name="details" placeholder="Details" className="textarea-input" component={ TextareaField } validate={ Required }/>
