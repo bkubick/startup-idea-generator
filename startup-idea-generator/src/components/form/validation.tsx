@@ -113,4 +113,24 @@ function FieldMatch(field1Value?: string, field2Value?: string, message?: string
 }
 
 
-export { FieldMatch, Password, Required, ValidateEmail, ValidationPipeline };
+/**
+ * Validate that the number of characters does not exceed the limit.
+ * 
+ * @param limit the maximum number of characters allowed.
+ * @param message the error message to display if the limit is exceeded.
+ * @returns the validation function.
+ */
+function Limit(limit: number, message?: string): (value?: any) => React.JSX.Element | undefined {
+    return (value?: any): React.JSX.Element | undefined => {
+        let error: string | undefined;
+
+        if ( value && value.length > limit ) {
+            error = message || `Must be ${limit} or less`;
+        }
+
+        return Error(error);
+    }
+}
+
+
+export { FieldMatch, Password, Required, Limit, ValidateEmail, ValidationPipeline };
