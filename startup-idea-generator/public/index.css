@@ -2,6 +2,8 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+@import "src/static/css/fields.css";
+
 
 body {
   @apply bg-secondary cursor-default
@@ -23,20 +25,4 @@ body {
 
 .btn-primary-outline:hover {
   @apply -translate-y-1 shadow-md shadow-primary;
-}
-
-.textarea-input {
-  @apply rounded text-white font-mono text-xs bg-transparent border-gray-400 flex;
-
-  line-height: 18px;
-  padding: 8px 8px 8px 12px;
-  min-width: 200px;
-  min-height: 300px;
-}
-
-.input {
-  @apply rounded text-white font-mono text-xs bg-transparent border-gray-400;
-
-  line-height: 18px;
-  padding: 8px 8px 8px 12px;
 }

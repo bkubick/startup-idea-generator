@@ -1,0 +1,45 @@
+.textarea-input {
+    @apply rounded text-white font-mono text-xs bg-transparent border-gray-400 flex;
+
+    line-height: 18px;
+    padding: 8px 8px 8px 12px;
+    min-width: 200px;
+    min-height: 300px;
+}
+
+.input {
+    @apply rounded text-white font-mono text-xs bg-transparent border-gray-400;
+
+    line-height: 18px;
+    padding: 8px 8px 8px 12px;
+}
+
+.react-select-container .react-select__control {
+    @apply w-full rounded-lg bg-transparent text-xs border-slate-400 border-2 font-mono hover:border-slate-400;
+
+    line-height: 18px;
+}
+
+.react-select-container .react-select__placeholder {
+    @apply text-slate-400;
+}
+
+.react-select-container .react-select__indicator {
+    @apply text-slate-400;
+}
+
+.react-select-container .react-select__multi-value {
+    @apply bg-slate-200 rounded-full pl-2 text-sm;
+}
+
+.react-select-container .react-select__multi-value__remove {
+    @apply rounded-full hover:bg-slate-400 hover:text-slate-100;
+}
+
+.react-select-container .react-select__clear-indicator {
+    @apply hidden;
+}
+
+.react-select-container .react-select__menu .react-select__option {
+    @apply text-slate-800 hover:bg-slate-400 hover:text-slate-100;
+}
