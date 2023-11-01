@@ -118,7 +118,7 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
                         <ErrorMessage name="industries"/>
                     </div>
                     <div className='mb-4'>
-                        <Field name="details" placeholder="Details" className="textarea-input" component={ TextareaField } validate={ Required }/>
+                        <Field name="details" placeholder="Details..." className="textarea-input" component={ TextareaField } validate={ Required }/>
                         <ErrorMessage name="details"/>
                     </div>
                     <div className='mb-4'>
