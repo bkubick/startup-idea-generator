@@ -4,8 +4,6 @@ import IdeaGeneratorForm from './idea-generator-form';
 import { Tab, TopNav } from 'src/components/navigation';
 import { Spinner } from 'src/components/loading';
 
-import { generateIdeaPrompt } from 'src/utils/prompt-generator';
-
 
 interface Props {}
 
@@ -34,7 +32,6 @@ class StartupIdeaGenerator extends React.Component<Props, State> {
      */
     tabs: Tab[] = [
         { name: 'Startup Idea', id: 'startup-idea' },
-        { name: 'Prompt', id: 'prompt' },
     ]
 
     constructor(props: Props) {
@@ -113,9 +110,6 @@ class StartupIdeaGenerator extends React.Component<Props, State> {
 
                             <div id={ this.tabs[0].id } className={`py-3 h-auto ${this.tabs[0].id === this.state.currentTab.id ? "visible" : "hidden"}`}>
                                 { this.generateStartupIdeaTextDisplay }
-                            </div>
-                            <div id={ this.tabs[1].id } className={`py-3 h-auto ${this.tabs[1].id === this.state.currentTab.id ? "visible" : "hidden"}`}>
-                                { generateIdeaPrompt().split(/\n/).map((line, index) => <React.Fragment key={index}>{line}<br/></React.Fragment>) }
                             </div>
                         </div>
                     </div>
