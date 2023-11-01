@@ -93,7 +93,7 @@ class StartupIdeaGenerator extends React.Component<Props, State> {
         return (
           <div className="text-white w-full px-10">
             <div className='grid lg:grid-cols-12'>
-                <div className='col-span-5 lg:overflow-hidden flex'>
+                <div className='col-span-5 lg:overflow-hidden'>
                     <div className='overflow-y-scroll no-scrollbar px-5'>
                         <div className='lg:h-screen'>
                             <h1 className='sticky top-0 backdrop-blur z-10 uppercase text-2xl font-medium py-5'>
