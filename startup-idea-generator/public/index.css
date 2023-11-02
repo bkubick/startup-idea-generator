@@ -19,6 +19,10 @@ body {
   @apply font-bold py-1 px-2 rounded-md;
 }
 
+.btn-sm {
+  @apply text-sm py-0 font-normal px-2 rounded-md;
+}
+
 .btn-primary-outline {
   @apply text-primary border-2 border-primary transition ease-in-out duration-150 inline-block;
 }

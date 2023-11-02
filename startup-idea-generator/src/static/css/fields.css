@@ -29,11 +29,11 @@
 }
 
 .react-select-container .react-select__multi-value {
-    @apply bg-slate-200 rounded-full pl-2 text-sm;
+    @apply bg-slate-100 rounded-full pl-2 text-sm;
 }
 
 .react-select-container .react-select__multi-value__remove {
-    @apply rounded-full hover:bg-slate-400 hover:text-slate-100;
+    @apply text-slate-800 rounded-full hover:bg-slate-400 hover:text-slate-100;
 }
 
 .react-select-container .react-select__menu .react-select__option {
