@@ -14,6 +14,7 @@ interface FormValues {
     industries: fieldTypes.Option[];
     ideaDetails: string;
     hobbies: fieldTypes.Option[];
+    personalDetails: string;
 }
 
 
@@ -65,6 +66,7 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
         industries: [],
         ideaDetails: '',
         hobbies: [],
+        personalDetails: '',
     }
 
     constructor(props: Props) {
@@ -166,6 +168,17 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
                         </div>
                         <Field name="ideaDetails" placeholder="Idea Details..." className="textarea-input" component={ TextareaField } validate={ Required }/>
                         <ErrorMessage name="ideaDetails"/>
+                    </div>
+                    <div className='mb-4'>
+                        <div className='mb-4 text-lg font-medium text-slate-300'>
+                            Personal Details
+                            <div className='text-sm font-light'>
+                                Provide any additional details/information about you. This will help generate the startup
+                                idea to be more inline with who you are and what would resonate best with you.
+                            </div>
+                        </div>
+                        <Field name="personalDetails" placeholder="Personal Details..." className="textarea-input" component={ TextareaField } validate={ Required }/>
+                        <ErrorMessage name="personalDetails"/>
                     </div>
                     <div className='pb-6'>
                         <div className='mb-4 text-lg font-medium text-slate-300'>
