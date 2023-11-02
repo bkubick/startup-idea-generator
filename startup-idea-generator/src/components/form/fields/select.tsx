@@ -60,6 +60,11 @@ const createOption = (label: string): types.Option => ({
 const SelectField = (props: SelectFieldProps): React.JSX.Element => {
     const [_, state, { setValue, setTouched }] = useField(props.field.name);
 
+    // Custom components for the select field.
+    const customComponents = {
+        IndicatorSeparator: null,
+    };
+
     // Removes the option the user typed in from the list of options.
     const onChange = (value: any) => {
         setValue(value);
@@ -69,6 +74,7 @@ const SelectField = (props: SelectFieldProps): React.JSX.Element => {
     return (
         <Select
             options={ props.options}
+            components={ customComponents }
             placeholder={ props.placeholder }
             className={ className }
             classNamePrefix='react-select'
