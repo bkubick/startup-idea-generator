@@ -91,10 +91,15 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
 
         const sleep = (delay: number) => new Promise((resolve) => setTimeout(resolve, delay))
 
-        let prompt = generateIdeaPrompt();
-        prompt = `${prompt}\n Form: ${JSON.stringify(values)}`;
+        const industries: string[] = values.industries.map((industry: fieldTypes.Option) => industry.label.toLowerCase());
+        const hobbies: string[] = values.hobbies.map((hobby: fieldTypes.Option) => hobby.label.toLowerCase());
+        const prompt = generateIdeaPrompt(industries, hobbies, values.details);
+
         await sleep(4000);
+
         console.log(values);
+        console.log(prompt);
+
         const startupIdea: string = 'Coudn\'t generate startup idea :(';
         actions.setSubmitting(false);
     
@@ -118,26 +123,66 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
             <Formik initialValues={ this.INITIAL_FORM_VALUES } onSubmit={ this.onSubmit }>
                 <Form className='w-full'>
                     <div className='mb-4'>
+                        <div className='mb-4 text-lg font-medium text-slate-300'>
+                            Chat GPT Model:
+                        </div>
                         <Field name="gptModel" className="flex" options={ this.GPT_MODEL_OPTIONS } component={ RadioGroup } validate={ Required }/>
                         <ErrorMessage name="gptModel"/>
                     </div>
                     <div className='mb-4'>
+                        <div className='mb-4 text-lg font-medium text-slate-300'>
+                            Industries
+                            <div className='text-sm font-light'>
+                                List out up to 10 industries you are interested in. This will help the AI generate a startup idea
+                                that is more catered to the industries you are interested in.
+                            </div>
+                        </div>
                         <Field name="industries" placeholder="Industries..."  className="flex" options={ this.INDUSTRY_OPTIONS } component={ SelectField } validate={ ValidationPipeline([Required, Limit(10)]) }/>
                         <ErrorMessage name="industries"/>
                     </div>
                     <div className='mb-4'>
+                        <div className='mb-4 text-lg font-medium text-slate-300'>
+                            Hobbies
+                            <div className='text-sm font-light'>
+                                List out up to 10 hobbies you enjoy doing. This will help the AI generate a startup idea
+                                that is more catered to your interests. If you do not have any hobbies, you can list out
+                                things you enjoy doing in your free time or things you are passionate about.
+                                <br/>
+                                <br/>
+                                To input a hobby, type in the hobby and press Enter or Tab.
+                            </div>
+                        </div>
                         <Field name="hobbies" className="flex" placeholder="Hobbies..." component={ CreatableSelectField } validate={ ValidationPipeline([Required, Limit(10)]) }/>
                         <ErrorMessage name="hobbies"/>
                     </div>
                     <div className='mb-4'>
+                        <div className='mb-4 text-lg font-medium text-slate-300'>
+                            Details
+                            <div className='text-sm font-light'>
+                                Prove any additional details/information you would like to include to help generate the startup
+                                idea and be more precise with the results.
+                            </div>
+                        </div>
                         <Field name="details" placeholder="Details..." className="textarea-input" component={ TextareaField } validate={ Required }/>
                         <ErrorMessage name="details"/>
                     </div>
-                    <div className='mb-4'>
-                        <Field type="password" name="apiToken" placeholder="Chat GPT API Token" className="input" component={ InputField } validate={ Required } />
+                    <div className='pb-6'>
+                        <div className='mb-4 text-lg font-medium text-slate-300'>
+                            Chat GPT API Token
+                            <div className='text-sm font-light'>
+                                In order to generate the startup idea, you need to provide a Chat GPT API token.
+                                If you do not have a token set up, you can set one up from the &nbsp;
+                                <a href='https://platform.openai.com/' target='_blank' rel='noreferrer' className='text-blue-400 hover:underline'>website</a>.
+                            </div>
+                        </div>
+                        <div className='flex justify-end'>
+                            <div className='w-full pr-4'>
+                                <Field type="password" name="apiToken" placeholder="Token..." className="input" component={ InputField } validate={ Required } />
+                            </div>
+                            <button className='btn-sm btn-primary-outline' type="submit">Submit</button>
+                        </div>
                         <ErrorMessage name="apiToken"/>
                     </div>
-                    <button className='btn btn-primary-outline' type="submit">Submit</button>
                 </Form>
             </Formik>
         )
