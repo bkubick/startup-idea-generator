@@ -2,7 +2,7 @@ import { ErrorMessage, Formik, Form, Field } from 'formik';
 import React, { ReactElement } from 'react';
 
 import { GPTModel } from 'src/ai/chatgpt.model';
-import { fieldTypes, InputField, RadioGroup, SelectField, TextareaField } from 'src/components/form/fields';
+import { CreatableSelectField, fieldTypes, InputField, RadioGroup, SelectField, TextareaField } from 'src/components/form/fields';
 import { Limit, Required, ValidationPipeline } from 'src/components/form/validation';
 
 import { generateIdeaPrompt } from 'src/utils/prompt-generator';
@@ -116,6 +116,10 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
                     <div className='mb-4'>
                         <Field name="industries" placeholder="Industries..."  className="flex" options={ this.INDUSTRY_OPTIONS } component={ SelectField } validate={ ValidationPipeline([Required, Limit(10)]) }/>
                         <ErrorMessage name="industries"/>
+                    </div>
+                    <div className='mb-4'>
+                        <Field name="hobbies" className="flex" placeholder="Hobbies..." component={ CreatableSelectField } validate={ ValidationPipeline([Required, Limit(10)]) }/>
+                        <ErrorMessage name="hobbies"/>
                     </div>
                     <div className='mb-4'>
                         <Field name="details" placeholder="Details..." className="textarea-input" component={ TextareaField } validate={ Required }/>
