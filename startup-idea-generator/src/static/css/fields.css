@@ -39,3 +39,7 @@
 .react-select-container .react-select__menu .react-select__option {
     @apply text-slate-800 hover:bg-slate-400 hover:text-slate-100;
 }
+
+.react-select-container .react-select__input-container {
+    @apply text-white;
+}
