@@ -12,7 +12,7 @@ interface FormValues {
     gptModel: string;
     apiToken: string;
     industries: fieldTypes.Option[];
-    details: string;
+    ideaDetails: string;
     hobbies: fieldTypes.Option[];
 }
 
@@ -63,7 +63,7 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
         gptModel: GPTModel.GPT_4,
         apiToken: '',
         industries: [],
-        details: '',
+        ideaDetails: '',
         hobbies: [],
     }
 
@@ -93,7 +93,7 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
 
         const industries: string[] = values.industries.map((industry: fieldTypes.Option) => industry.label.toLowerCase());
         const hobbies: string[] = values.hobbies.map((hobby: fieldTypes.Option) => hobby.label.toLowerCase());
-        const prompt = generateIdeaPrompt(industries, hobbies, values.details);
+        const prompt = generateIdeaPrompt(industries, hobbies, values.ideaDetails);
 
         await sleep(4000);
 
@@ -157,14 +157,15 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
                     </div>
                     <div className='mb-4'>
                         <div className='mb-4 text-lg font-medium text-slate-300'>
-                            Details
+                            Idea Details
                             <div className='text-sm font-light'>
-                                Prove any additional details/information you would like to include to help generate the startup
-                                idea and be more precise with the results.
+                                Provide any additional details/information you would like to include specific to the
+                                ideas you are looking to be generated. This will help generate the startup idea to be
+                                more inline with your requirements.
                             </div>
                         </div>
-                        <Field name="details" placeholder="Details..." className="textarea-input" component={ TextareaField } validate={ Required }/>
-                        <ErrorMessage name="details"/>
+                        <Field name="ideaDetails" placeholder="Idea Details..." className="textarea-input" component={ TextareaField } validate={ Required }/>
+                        <ErrorMessage name="ideaDetails"/>
                     </div>
                     <div className='pb-6'>
                         <div className='mb-4 text-lg font-medium text-slate-300'>
