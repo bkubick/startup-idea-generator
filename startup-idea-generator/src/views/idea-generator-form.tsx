@@ -18,6 +18,7 @@ interface FormValues {
 
 interface Props {
     generatingHandler?: (generating: boolean) => void;
+    generatedStartupIdeaHandler?: (idea: string) => void;
 }
 
 
@@ -92,11 +93,16 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
         prompt = `${prompt}\n Form: ${JSON.stringify(values)}`;
         await sleep(4000);
         console.log(values);
+        const startupIdea: string = 'Coudn\'t generate startup idea :(';
         actions.setSubmitting(false);
     
         this.setState({ submitting: false });
         if (this.props.generatingHandler) {
             this.props.generatingHandler(false);
+        }
+
+        if (this.props.generatedStartupIdeaHandler) {
+            this.props.generatedStartupIdeaHandler(startupIdea);
         }
     }
 

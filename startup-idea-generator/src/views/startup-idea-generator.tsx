@@ -45,6 +45,7 @@ class StartupIdeaGenerator extends React.Component<Props, State> {
 
         this.setActiveTab = this.setActiveTab.bind(this);
         this.setGenerating = this.setGenerating.bind(this);
+        this.setGeneratedStartupIdea = this.setGeneratedStartupIdea.bind(this);
     }
 
     /**
@@ -85,6 +86,17 @@ class StartupIdeaGenerator extends React.Component<Props, State> {
     }
 
     /**
+     * Sets the generated startup idea.
+     * 
+     * @param generatedStartupIdea  The generated startup idea.
+     */
+    setGeneratedStartupIdea(generatedStartupIdea: string) {
+        this.setState({
+            generatedStartupIdea: generatedStartupIdea,
+        });
+    }
+
+    /**
      * The render method for the startup idea generator.
      * 
      * @returns The startup idea generator.
@@ -99,7 +111,7 @@ class StartupIdeaGenerator extends React.Component<Props, State> {
                             <h1 className='sticky top-0 backdrop-blur z-10 uppercase text-2xl font-medium py-5'>
                                 Startup Idea Generator
                             </h1>
-                            <IdeaGeneratorForm generatingHandler={ this.setGenerating } />
+                            <IdeaGeneratorForm generatingHandler={ this.setGenerating } generatedStartupIdeaHandler={ this.setGeneratedStartupIdea }/>
                         </div>
                     </div>
                 </div>
