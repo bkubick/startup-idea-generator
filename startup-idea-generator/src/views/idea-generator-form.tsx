@@ -1,10 +1,10 @@
 import { ErrorMessage, Formik, Form, Field } from 'formik';
 import React, { ReactElement } from 'react';
 
-import { GPTModel } from 'src/ai/chatgpt.model';
 import { CreatableSelectField, fieldTypes, InputField, RadioGroup, SelectField, TextareaField } from 'src/components/form/fields';
 import { Limit, Required, ValidationPipeline } from 'src/components/form/validation';
 
+import * as AI from 'src/ai';
 import { generateIdeaPrompt } from 'src/utils/prompt-generator';
 
 
@@ -19,22 +19,20 @@ interface FormValues {
 
 
 interface Props {
-    generatingHandler?: (generating: boolean) => void;
-    generatedStartupIdeaHandler?: (idea: string) => void;
+    generatingHandler: (generating: boolean) => void;
+    generatedStartupIdeaHandler: (idea: string) => void;
 }
 
 
-interface State {
-    submitting: boolean;
-}
+interface State {}
 
 
 class IdeaGeneratorForm extends React.Component<Props, State> {
 
     GPT_MODEL_OPTIONS: fieldTypes.Option[] = [
-        { label: GPTModel.GPT_35_TURBO, value: GPTModel.GPT_35_TURBO },
-        { label: GPTModel.GPT_35_TURBO_16K, value: GPTModel.GPT_35_TURBO_16K },
-        { label: GPTModel.GPT_4, value: GPTModel.GPT_4 },
+        { label: AI.GPTModel.GPT_35_TURBO, value: AI.GPTModel.GPT_35_TURBO },
+        { label: AI.GPTModel.GPT_35_TURBO_16K, value: AI.GPTModel.GPT_35_TURBO_16K },
+        { label: AI.GPTModel.GPT_4, value: AI.GPTModel.GPT_4 },
     ]
 
     INDUSTRY_OPTIONS: fieldTypes.Option[] = [
@@ -61,7 +59,7 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
     ]
 
     INITIAL_FORM_VALUES: FormValues = {
-        gptModel: GPTModel.GPT_4,
+        gptModel: AI.GPTModel.GPT_4,
         apiToken: '',
         industries: [],
         ideaDetails: '',
@@ -84,35 +82,27 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
      * @param values   The form values.
      * @param actions   The form actions.
      */
-    async onSubmit(values: FormValues, actions: any) {
-        this.setState({ submitting: true });
-
-        if (this.props.generatingHandler) {
-            this.props.generatingHandler(true);
-        }
-
-        const sleep = (delay: number) => new Promise((resolve) => setTimeout(resolve, delay))
+    async onSubmit(values: FormValues, actions: any): Promise<void> {
+        this.props.generatingHandler(true);
 
         const industries: string[] = values.industries.map((industry: fieldTypes.Option) => industry.label.toLowerCase());
         const hobbies: string[] = values.hobbies.map((hobby: fieldTypes.Option) => hobby.label.toLowerCase());
-        const prompt = generateIdeaPrompt(industries, hobbies, values.ideaDetails);
+        const prompt = generateIdeaPrompt(industries, hobbies, values.ideaDetails, values.personalDetails);
+        const model = new AI.ChatGPT(values.apiToken);
 
-        await sleep(4000);
+        let startupIdea: string = 'Coudn\'t generate startup idea.... Check your API token and please try again.';
+        try {
+            const response = await model.ask(prompt, values.gptModel, 1);
+            startupIdea = response.choices[0].message.content;
+        }
+        catch (err) {
+            console.log('ERROR: ', err);
+        }
 
-        console.log(values);
-        console.log(prompt);
+        this.props.generatedStartupIdeaHandler(startupIdea);
 
-        const startupIdea: string = 'Coudn\'t generate startup idea :(';
         actions.setSubmitting(false);
-    
-        this.setState({ submitting: false });
-        if (this.props.generatingHandler) {
-            this.props.generatingHandler(false);
-        }
-
-        if (this.props.generatedStartupIdeaHandler) {
-            this.props.generatedStartupIdeaHandler(startupIdea);
-        }
+        this.props.generatingHandler(false);
     }
 
     /**
