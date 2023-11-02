@@ -6,7 +6,7 @@
  * - ChatGPT: a request handler to the ChatGPT API, allowing for LLM generation.
  */
 
-import { ChatGPT } from "./chatgpt.model";
+import { ChatGPT, GPTModel } from "./chatgpt.model";
 
 
-export { ChatGPT };
+export { ChatGPT, GPTModel };

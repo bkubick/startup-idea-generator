@@ -43,21 +43,39 @@ interface GPTRequestData {
 
 
 /**
+ * The response choice for the GPT chatbot.
+ * 
+ * @property finish_reason The reason for the finish.
+ * @property index The index of the response.
+ * @property message The message of the response.
+ * @property message.content The content of the message.
+ * @property message.role The role of the message.
+ */
+interface GPTResponseChoice {
+    finish_reason: string;
+    index: number;
+    message: {
+        content: string;
+        role: string;
+    }
+}
+
+
+/**
  * The response data from the GPT chatbot.
  * 
- * @property answer The answer from the GPT chatbot.
- * @property conversation The conversation from the GPT chatbot.
- * @property conversation.role The role of the conversation.
- * @property conversation.content The content of the conversation.
+ * @property choices The choices from the GPT chatbot.
+ * @property created The time the response was created.
+ * @property id The id of the response.
+ * @property model The model used for the GPT chatbot.
+ * @property object The object of the response.
  */
 interface GPTResponseData {
-    answer: string;
-    conversation: [
-        {
-            role: string;
-            content: string;
-        }
-    ];
+    choices: GPTResponseChoice[];
+    created: number;
+    id: string;
+    model: string;
+    object: string;
 }
 
 
@@ -94,14 +112,14 @@ class ChatGPT {
      * @param temperature The temperature to use for the GPT chatbot (0-1).
      * @returns The generated request.
      */
-    private generateGptRequest(prompt: string, model: GPTModel, temperature: number = 0): Request<GPTRequestData> {
+    private generateGptRequest(prompt: string, model: string, temperature: number = 0): Request<GPTRequestData> {
         const request: Request<GPTRequestData> = {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.token}`,
             },
             data: {
-                model: model.toString(),
+                model: model,
                 messages: [
                     {
                       role: "user",
@@ -123,7 +141,7 @@ class ChatGPT {
      * @param temperature the temperature to use for the GPT chatbot (0-1).
      * @returns the response from the GPT chatbot.
      */
-    async ask(prompt: string, model: GPTModel = GPTModel.GPT_35_TURBO, temperature: number = 0): Promise<GPTResponseData> {
+    async ask(prompt: string, model: string = GPTModel.GPT_35_TURBO, temperature: number = 0): Promise<GPTResponseData> {
         const request = this.generateGptRequest(prompt, model, temperature);
         const response = await axios.post<GPTResponseData>(
             this.url, request.data, { headers: request.headers }
