@@ -11,8 +11,9 @@ import { generateIdeaPrompt } from 'src/utils/prompt-generator';
 interface FormValues {
     gptModel: string;
     apiToken: string;
-    industries: string[];
+    industries: fieldTypes.Option[];
     details: string;
+    hobbies: fieldTypes.Option[];
 }
 
 
@@ -63,6 +64,7 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
         apiToken: '',
         industries: [],
         details: '',
+        hobbies: [],
     }
 
     constructor(props: Props) {
