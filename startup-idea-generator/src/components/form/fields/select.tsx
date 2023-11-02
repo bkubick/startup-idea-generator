@@ -59,6 +59,7 @@ const SelectField = (props: Props): React.JSX.Element => {
             classNamePrefix='react-select'
             value={ state?.value }
             isMulti
+            isClearable={ false }
             onChange={ onChange }
             onBlur={ setTouched as any}
         />
