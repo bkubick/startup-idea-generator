@@ -110,8 +110,14 @@ const CreatableSelectField = (props: SelectFieldProps): React.JSX.Element => {
         switch (event.key) {
           case 'Enter':
           case 'Tab':
-            const newValue = [...(field.value || []), createOption(inputValue)];
-            helpers.setValue(newValue);
+            const value = createOption(inputValue);
+            const existingValues: string[] | undefined = field.value?.map((option: types.Option) => option.value);
+
+            if (existingValues && existingValues.includes(value.value)) {
+                return;
+            }
+
+            helpers.setValue([...(field.value || []), value]);
             setInputValue('');
             event.preventDefault();
         }
