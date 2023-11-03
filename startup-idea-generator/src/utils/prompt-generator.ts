@@ -11,12 +11,16 @@
  * @param hobbies the hobbies that the user is interested in
  * @param ideaDetails the details specific to the ideas that the user is interested in
  * @param personalDetails the details specific to the user that the user wants to be taken into account
+ * @param passions the passions of the user
+ * @param skills the skills of the user
  * @returns the prompt to be used in conjunction with the AI model
  */
 function generateIdeaPrompt(industries: string[],
                             hobbies: string[],
                             ideaDetails?: string,
-                            personalDetails?: string): string {
+                            personalDetails?: string,
+                            passions?: string[],
+                            skills?: string[]): string {
     const industriesString: string = industries.join(', ');
     const hobbiesString: string = hobbies.join(', ');
 
@@ -41,6 +45,20 @@ function generateIdeaPrompt(industries: string[],
 
             Please take into account the following details about the me to help
             tailor the ideas more to me: ${personalDetails}.
+        `
+    }
+
+    if (passions && passions.length > 0) {
+        prompt += `
+
+            Please take into account the following passions of mine: ${passions.join(', ')}.
+        `
+    }
+
+    if (skills && skills.length > 0) {
+        prompt += `
+
+            Please take into account the following skills of mine: ${skills.join(', ')}.
         `
     }
 

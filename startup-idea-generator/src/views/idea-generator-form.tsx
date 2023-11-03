@@ -15,6 +15,8 @@ interface FormValues {
     ideaDetails: string;
     hobbies: fieldTypes.Option[];
     personalDetails: string;
+    skills: fieldTypes.Option[];
+    passions: fieldTypes.Option[];
 }
 
 
@@ -65,6 +67,8 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
         ideaDetails: '',
         hobbies: [],
         personalDetails: '',
+        skills: [],
+        passions: [],
     }
 
     constructor(props: Props) {
@@ -87,7 +91,14 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
 
         const industries: string[] = values.industries.map((industry: fieldTypes.Option) => industry.label.toLowerCase());
         const hobbies: string[] = values.hobbies.map((hobby: fieldTypes.Option) => hobby.label.toLowerCase());
-        const prompt = generateIdeaPrompt(industries, hobbies, values.ideaDetails, values.personalDetails);
+        const skills: string[] = values.skills.map((skill: fieldTypes.Option) => skill.label.toLowerCase());
+        const passions: string[] = values.passions.map((passion: fieldTypes.Option) => passion.label.toLowerCase());
+        const prompt = generateIdeaPrompt(industries,
+                                          hobbies,
+                                          values.ideaDetails,
+                                          values.personalDetails,
+                                          passions,
+                                          skills);
         const model = new AI.ChatGPT(values.apiToken);
 
         let startupIdea: string = 'Coudn\'t generate startup idea.... Check your API token and please try again.';
@@ -125,18 +136,18 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
                         <div className='mb-4 text-lg font-medium text-slate-300'>
                             Industries
                             <div className='text-sm font-light'>
-                                List out up to 10 industries you are interested in. This will help the AI generate a startup idea
+                                List out up to 5 industries you are interested in. This will help the AI generate a startup idea
                                 that is more catered to the industries you are interested in.
                             </div>
                         </div>
-                        <Field name="industries" placeholder="Industries..."  className="flex" options={ this.INDUSTRY_OPTIONS } component={ SelectField } validate={ ValidationPipeline([Required, Limit(10)]) }/>
+                        <Field name="industries" placeholder="Industries..."  className="flex" options={ this.INDUSTRY_OPTIONS } component={ SelectField } validate={ ValidationPipeline([Required, Limit(5)]) }/>
                         <ErrorMessage name="industries"/>
                     </div>
                     <div className='mb-4'>
                         <div className='mb-4 text-lg font-medium text-slate-300'>
                             Hobbies
                             <div className='text-sm font-light'>
-                                List out up to 10 hobbies you enjoy doing. This will help the AI generate a startup idea
+                                List out up to 5 hobbies you enjoy doing. This will help the AI generate a startup idea
                                 that is more catered to your interests. If you do not have any hobbies, you can list out
                                 things you enjoy doing in your free time or things you are passionate about.
                                 <br/>
@@ -144,8 +155,36 @@ class IdeaGeneratorForm extends React.Component<Props, State> {
                                 To input a hobby, type in the hobby and press Enter or Tab.
                             </div>
                         </div>
-                        <Field name="hobbies" className="flex" placeholder="Hobbies..." component={ CreatableSelectField } validate={ ValidationPipeline([Required, Limit(10)]) }/>
+                        <Field name="hobbies" className="flex" placeholder="Hobbies..." component={ CreatableSelectField } validate={ ValidationPipeline([Required, Limit(5)]) }/>
                         <ErrorMessage name="hobbies"/>
+                    </div>
+                    <div className='mb-4'>
+                        <div className='mb-4 text-lg font-medium text-slate-300'>
+                            Passions
+                            <div className='text-sm font-light'>
+                                List up to 5 passions you have. This will help the AI generate a startup idea
+                                that is more catered to your interests.
+                                <br/>
+                                <br/>
+                                To input a passion, type in the passion and press Enter or Tab.
+                            </div>
+                        </div>
+                        <Field name="passions" className="flex" placeholder="Passions..." component={ CreatableSelectField } validate={ ValidationPipeline([Required, Limit(5)]) }/>
+                        <ErrorMessage name="passions"/>
+                    </div>
+                    <div className='mb-4'>
+                        <div className='mb-4 text-lg font-medium text-slate-300'>
+                            Skills
+                            <div className='text-sm font-light'>
+                                List up to 10 of your top skills. This will help the AI generate a startup idea
+                                that is more catered to your skill set.
+                                <br/>
+                                <br/>
+                                To input a skill, type in the skill and press Enter or Tab.
+                            </div>
+                        </div>
+                        <Field name="skills" className="flex" placeholder="Skills..." component={ CreatableSelectField } validate={ ValidationPipeline([Required, Limit(10)]) }/>
+                        <ErrorMessage name="skills"/>
                     </div>
                     <div className='mb-4'>
                         <div className='mb-4 text-lg font-medium text-slate-300'>
